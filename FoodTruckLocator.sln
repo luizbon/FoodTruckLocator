@@ -5,12 +5,18 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckLocator.Api", "src\FoodTruckLocator.Api\FoodTruckLocator.Api.csproj", "{55CA85EB-C454-4AEC-BDDA-7039CD5BC95E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckLocator", "src\FoodTruckLocator\FoodTruckLocator.csproj", "{C137C29B-EA43-4601-BCEE-2FAB0E31DBA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTruckLocator", "src\FoodTruckLocator\FoodTruckLocator.csproj", "{C137C29B-EA43-4601-BCEE-2FAB0E31DBA8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{1BBF62F8-DC02-464B-8E78-DCCC07D3D822}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.md = Readme.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTruckLocator.Tests", "tests\FoodTruckLocator.Tests\FoodTruckLocator.Tests.csproj", "{5A672622-B0C6-424B-82A2-899E6A02CA9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AAB03CE6-6DC6-4C34-8A9F-8C5284CCF0F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B89A98FB-B18F-4B50-8B30-20B5F40A9354}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +32,18 @@ Global
 		{C137C29B-EA43-4601-BCEE-2FAB0E31DBA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C137C29B-EA43-4601-BCEE-2FAB0E31DBA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C137C29B-EA43-4601-BCEE-2FAB0E31DBA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A672622-B0C6-424B-82A2-899E6A02CA9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A672622-B0C6-424B-82A2-899E6A02CA9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A672622-B0C6-424B-82A2-899E6A02CA9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A672622-B0C6-424B-82A2-899E6A02CA9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{55CA85EB-C454-4AEC-BDDA-7039CD5BC95E} = {B89A98FB-B18F-4B50-8B30-20B5F40A9354}
+		{C137C29B-EA43-4601-BCEE-2FAB0E31DBA8} = {B89A98FB-B18F-4B50-8B30-20B5F40A9354}
+		{5A672622-B0C6-424B-82A2-899E6A02CA9E} = {AAB03CE6-6DC6-4C34-8A9F-8C5284CCF0F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16160CB5-6E31-4EA4-823F-6BFCDBC1BCF3}

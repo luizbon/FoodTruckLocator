@@ -11,8 +11,7 @@ namespace FoodTruckLocator.Services
 {
     public interface ISearchService
     {
-        Task<IEnumerable<Permit>> FindAsync(double lat, double lng);
-        Task<IEnumerable<Permit>> FindAsync(double lat, double lng, int numberOfResults);
+        Task<IEnumerable<Permit>> FindAsync(double lat, double lng, int? numberOfResults);
     }
 
     public class SearchService : ISearchService
@@ -26,12 +25,7 @@ namespace FoodTruckLocator.Services
             _appOptions = appOptions.Value;
         }
 
-        public async Task<IEnumerable<Permit>> FindAsync(double lat, double lng)
-        {
-            return await FindAsync(lat, lng, _appOptions.NumberOfResults);
-        }
-
-        public async Task<IEnumerable<Permit>> FindAsync(double lat, double lng, int numberOfResults)
+        public async Task<IEnumerable<Permit>> FindAsync(double lat, double lng, int? numberOfResults)
         {
             var permits = await _storageProvider.ReadPermitsAsync();
 
@@ -40,7 +34,7 @@ namespace FoodTruckLocator.Services
                     Permit = permit,
                     Distance = GeoCalculator.GetDistance(lat, lng, permit.Latitude, permit.Longitude)
                 }).OrderBy(result => result.Distance)
-                .Take(numberOfResults)
+                .Take(numberOfResults ?? _appOptions.NumberOfResults)
                 .Select(result => result.Permit);
         }
     }
