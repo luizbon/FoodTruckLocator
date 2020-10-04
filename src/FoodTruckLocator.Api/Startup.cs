@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace FoodTruckLocator.Api
 {
@@ -35,6 +36,10 @@ namespace FoodTruckLocator.Api
             services.AddTransient<ISearchService, SearchService>();
 
             services.AddControllers();
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Food Truck Locator API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +49,14 @@ namespace FoodTruckLocator.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Food Truck Locator V1");
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();

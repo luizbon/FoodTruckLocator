@@ -16,7 +16,7 @@ namespace FoodTruckLocator.Providers
 
     public class BlobProvider : IBlobProvider
     {
-        private const string CsvPath = "Data/Mobile_Food_Facility_Permit.csv";
+        private const string CsvFileName = "Mobile_Food_Facility_Permit.csv";
         private readonly HttpClient _httpClient;
         private readonly IFile _file;
         private readonly AppOptions _appOptions;
@@ -30,10 +30,10 @@ namespace FoodTruckLocator.Providers
 
         public async Task<Stream> GetCsvAsync()
         {
-            if (!_file.Exists(CsvPath))
+            if (!_file.Exists(CsvFileName))
                 await DownloadCsvAsync();
 
-            return _file.OpenRead(CsvPath);
+            return _file.OpenRead(CsvFileName);
         }
 
         public async Task DownloadCsvAsync()
@@ -49,7 +49,7 @@ namespace FoodTruckLocator.Providers
             try
             {
                 stream.Position = 0;
-                using var writeStream = _file.OpenWrite(CsvPath);
+                using var writeStream = _file.OpenWrite(CsvFileName);
                 await stream.CopyToAsync(writeStream);
             }
             catch

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodTruckLocator.Configuration;
@@ -11,7 +12,7 @@ namespace FoodTruckLocator.Services
 {
     public interface ISearchService
     {
-        Task<IEnumerable<Permit>> FindAsync(double lat, double lng, int? numberOfResults);
+        Task<IEnumerable<Permit>> FindAsync(double lat, double lng, int? numberOfResults = null);
     }
 
     public class SearchService : ISearchService
@@ -25,11 +26,13 @@ namespace FoodTruckLocator.Services
             _appOptions = appOptions.Value;
         }
 
-        public async Task<IEnumerable<Permit>> FindAsync(double lat, double lng, int? numberOfResults)
+        public async Task<IEnumerable<Permit>> FindAsync(double lat, double lng, int? numberOfResults = null)
         {
             var permits = await _storageProvider.ReadPermitsAsync();
 
-            return permits.Select(permit => new
+            return permits
+                .Where(permit => permit.ExpirationDate > DateTime.UtcNow) // TODO: Compare with local time
+                .Select(permit => new
                 {
                     Permit = permit,
                     Distance = GeoCalculator.GetDistance(lat, lng, permit.Latitude, permit.Longitude)
