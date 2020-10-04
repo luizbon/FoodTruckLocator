@@ -4,6 +4,7 @@
 - Reading the documentation I found the dataset is published daily with weekly updates, so the retrieval of a new dataset will be based on this.
 - A class library is used to hold most of the logic for future code reusability. ie. Create a CLI or ChatBot interface
 - Use regular docker user for security
+- Docker uses only HTTP for simplicity
 
 ## Available improvements
 
@@ -19,3 +20,5 @@
 - Dump CSV file on a Document Datbase
 - Write integration tests on the Web server
 - Implement a Map page and use device GPS to identify where the user is
+- CI/CD
+- Controller caching
