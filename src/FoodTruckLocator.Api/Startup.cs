@@ -1,4 +1,9 @@
+using System.IO;
+using System.IO.Abstractions;
 using FoodTruckLocator.Configuration;
+using FoodTruckLocator.HostedServices;
+using FoodTruckLocator.Providers;
+using FoodTruckLocator.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +25,14 @@ namespace FoodTruckLocator.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppOptions>(Configuration.GetSection(AppOptions.Section));
+            services.Configure<CachingOptions>(Configuration.GetSection(CachingOptions.Section));
+
+            services.AddMemoryCache();
+            services.AddHostedService<Downloader>();
+            services.AddSingleton(_ => new FileSystem().File);
+            services.AddHttpClient<IBlobProvider, BlobProvider>();
+            services.AddTransient<IStorageProvider, StorageProvider>();
+            services.AddTransient<ISearchService, SearchService>();
 
             services.AddControllers();
         }

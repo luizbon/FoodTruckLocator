@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoBogus;
 using AutoBogus.Conventions;
 using AutoBogus.Moq;
+using AutoFixture.Xunit2;
 using FoodTruckLocator.Configuration;
 using FoodTruckLocator.Models;
 using FoodTruckLocator.Providers;
@@ -27,10 +28,14 @@ namespace FoodTruckLocator.Tests.Services
         }
 
         [Theory]
-        [InlineData(0,0,5)]
-        [InlineData(0,0,null)]
-        public async Task FindPermitsTests(double lat, double lng, int? resultSize)
+        [InlineData(1)]
+        [InlineData(3)]
+        [InlineData(5)]
+        [InlineData(8)]
+        [InlineData(null)]
+        public async Task FindPermitsTests(int? resultSize)
         {
+            var (lat, lng) = _fixture.GetCoordinates();
             var storageProvider = new Mock<IStorageProvider>();
             storageProvider.Setup(x => x.ReadPermitsAsync()).ReturnsAsync(_fixture.GetPermits(10));
             var options = Options.Create(new AppOptions
@@ -48,12 +53,12 @@ namespace FoodTruckLocator.Tests.Services
 
     public class SearchServiceFixture
     {
-        private readonly AutoFaker<Permit> _generator;
+        private readonly AutoFaker<Permit> _permitGenerator;
 
         public SearchServiceFixture()
         {
-            _generator = new AutoFaker<Permit>();
-            _generator.Configure(builder =>
+            _permitGenerator = new AutoFaker<Permit>();
+            _permitGenerator.Configure(builder =>
             {
                 builder.WithConventions();
                 builder.WithBinder<MoqBinder>();
@@ -62,7 +67,13 @@ namespace FoodTruckLocator.Tests.Services
 
         public IEnumerable<Permit> GetPermits(int count)
         {
-            return _generator.GenerateLazy(count);
+            return _permitGenerator.GenerateLazy(count);
+        }
+
+        public (double, double) GetCoordinates()
+        {
+            var rand = new Random();
+            return (rand.Next(-90, 90), rand.Next(-180, 80));
         }
     }
 }

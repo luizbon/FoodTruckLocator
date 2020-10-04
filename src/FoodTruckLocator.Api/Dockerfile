@@ -8,9 +8,7 @@ WORKDIR /app
 EXPOSE $HTTP_PORT
 
 # create a new user
-RUN adduser -D $USER \
-        && echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$USER \
-        && chmod 0440 /etc/sudoers.d/$USER
+RUN adduser -D $USER
 
 # execute the app under a non-root user
 USER $USER
